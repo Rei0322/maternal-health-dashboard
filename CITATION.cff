@@ -9,6 +9,7 @@ authors:
 version: 1.0.0
 date-released: 2026-10-25
 license: MIT
+doi: 10.5281/zenodo.23643141
 url: "https://maternal-health.samira-ray.dev"
 repository-code: "https://github.com/Rei0322/maternal-health-dashboard"
 abstract: >-

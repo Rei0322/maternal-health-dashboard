@@ -40,7 +40,9 @@ Agency for Healthcare Research and Quality (2023); CDC/NCHS (2026); Gunja et al.
 Code is released under the [MIT License](LICENSE). Figures belong to their original sources (listed above); please cite those sources when reusing the data.
 
 ## How to cite
-See [`CITATION.cff`](CITATION.cff), or use **Cite this repository** on GitHub.
+Ray, S. (2026). *The Maternal Health Gap: U.S. vs. the World* (Version 1.0.0) [Computer software]. Zenodo. https://doi.org/10.5281/zenodo.23643141
+
+Or use **Cite this repository** on GitHub, which reads [`CITATION.cff`](CITATION.cff).
 
 ## Author
 **Samira Ray** · [ORCID 0009-0006-6885-8400](https://orcid.org/0009-0006-6885-8400) · [samira-ray.dev](https://samira-ray.dev) · [GitHub](https://github.com/Rei0322)
