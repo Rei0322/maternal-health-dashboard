@@ -40,7 +40,7 @@ function cssVar(name) {
   return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
 }
 
-Chart.defaults.font.family = "'IBM Plex Sans', 'Helvetica Neue', sans-serif";
+Chart.defaults.font.family = "'Hanken Grotesk', 'Segoe UI', system-ui, sans-serif";
 Chart.defaults.font.size = 13;
 
 let charts = [];
@@ -59,7 +59,9 @@ function renderCharts() {
   const peerDark = cssVar('--color-peer-dark');
   const us = cssVar('--color-us');
   const usHover = cssVar('--color-us-hover');
+  const usSub = cssVar('--color-us-sub');
   const primary = cssVar('--color-primary');
+  const accent = cssVar('--color-accent');
 
   const baseGrid = { color: divider, drawTicks: false };
   const baseTicks = { color: muted, font: { size: 12 } };
@@ -67,7 +69,7 @@ function renderCharts() {
   // ---- Chart 1: Mortality ----
   const mCtx = document.getElementById('mortalityChart');
   const mColors = MORTALITY_DATA.map((d) =>
-    d.group === 'us' ? us : d.group === 'us-sub' ? usHover : peer
+    d.group === 'us' ? us : d.group === 'us-sub' ? usSub : peer
   );
   charts.push(
     new Chart(mCtx, {
@@ -152,7 +154,7 @@ function renderCharts() {
             const { ctx, chartArea, scales } = chart;
             const x = scales.x.getPixelForValue(OECD_AVERAGE_LEAVE);
             ctx.save();
-            ctx.strokeStyle = muted;
+            ctx.strokeStyle = accent;
             ctx.setLineDash([4, 4]);
             ctx.lineWidth = 1.5;
             ctx.beginPath();
@@ -161,7 +163,7 @@ function renderCharts() {
             ctx.stroke();
             ctx.setLineDash([]);
             ctx.fillStyle = muted;
-            ctx.font = '11px "IBM Plex Sans", sans-serif';
+            ctx.font = '11px "Hanken Grotesk", sans-serif';
             ctx.textAlign = 'left';
             ctx.fillText('OECD avg: 18.4 wks', x + 6, chartArea.top + 12);
             ctx.restore();
@@ -190,7 +192,7 @@ function renderCharts() {
           {
             label: 'Midwives per 1,000 live births',
             data: wSorted.map((d) => d.midwife),
-            backgroundColor: us,
+            backgroundColor: accent,
             borderRadius: 4,
             barThickness: 12,
           },
@@ -219,7 +221,7 @@ renderCharts();
 // ---------- Chart 2: Timing — custom 100%-stacked bar ----------
 (function renderTiming() {
   const container = document.getElementById('timingChart');
-  const shades = ['#c1502e', '#a03f22', '#0f6e76', '#0b5259', '#5b7274'];
+  const shades = ['#a26e5d', '#7f5244', '#4a659c', '#3b5283', '#6b5446'];
   const total = TIMING_DATA.reduce((s, d) => s + d.value, 0);
 
   const bar = document.createElement('div');
