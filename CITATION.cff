@@ -1,0 +1,24 @@
+cff-version: 1.2.0
+message: "If you use this dashboard, please cite it as below."
+title: "The Maternal Health Gap: U.S. vs. the World"
+type: software
+authors:
+  - given-names: Samira
+    family-names: Ray
+    orcid: "https://orcid.org/0009-0006-6885-8400"
+version: 1.0.0
+date-released: 2026-10-25
+license: MIT
+url: "https://maternal-health.samira-ray.dev"
+repository-code: "https://github.com/Rei0322/maternal-health-dashboard"
+abstract: >-
+  An interactive, hand-coded dashboard comparing U.S. maternal health
+  outcomes with high-income peer nations: maternal mortality and the racial
+  gap within the U.S., timing of pregnancy-related deaths, paid maternity
+  leave policy, and the maternity care workforce.
+keywords:
+  - data visualization
+  - dashboard
+  - maternal health
+  - public health
+  - Chart.js

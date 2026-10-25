@@ -1,0 +1,498 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The Maternal Health Gap: U.S. vs. the World</title>
+<meta name="description" content="An interactive dashboard comparing U.S. maternal health outcomes, postpartum death timing, paid leave policy, and maternity care workforce to peer high-income nations." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+
+<link rel="stylesheet" href="./base.css" />
+<link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap header-row">
+    <div class="brand">
+      <svg viewBox="0 0 32 32" fill="none" aria-hidden="true">
+        <circle cx="16" cy="16" r="14" stroke="currentColor" stroke-width="2"/>
+        <path d="M16 8v16M9 13c0 4 3 6 7 6s7-2 7-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="16" cy="9" r="1.6" fill="currentColor"/>
+      </svg>
+      <span>
+        Maternal Health Gap
+        <span class="brand-sub">U.S. in international context</span>
+      </span>
+    </div>
+    <button class="theme-toggle" data-theme-toggle aria-label="Switch to dark mode">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+  </div>
+</header>
+
+<main>
+  <section class="wrap hero">
+    <p class="eyebrow">International Comparison Dashboard</p>
+    <h1>The world protects new mothers. The U.S. mostly doesn't.</h1>
+    <p class="lede">Compared with high-income peer nations, the United States records the highest maternal death rate, the least generous paid leave policy, and one of the thinnest maternity care workforces — a gap that widens sharply for Black mothers.</p>
+    <p class="byline">Dashboard by Samira Ray · DSC/330 Data Communication and Visualization for Business · Latest available data, 2017–2025 (years vary by source)</p>
+  </section>
+
+  <section class="wrap kpi-grid" aria-label="Key figures">
+    <div class="kpi-card">
+      <div class="kpi-value us" data-count="22.3">0</div>
+      <div class="kpi-label">U.S. maternal deaths per 100,000 live births</div>
+      <div class="kpi-context">4.5× the 4.9 peer-country average (2022)</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-value us" data-count="49.5">0</div>
+      <div class="kpi-label">Deaths per 100,000 live births among Black mothers</div>
+      <div class="kpi-context">10.1× the peer-country average</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-value us" data-count="0">0</div>
+      <div class="kpi-label">Weeks of paid maternity leave, federal</div>
+      <div class="kpi-context">vs. 18.4-week OECD average</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-value us" data-count="15">0</div>
+      <div class="kpi-label">Maternity providers per 1,000 live births (workforce supply)</div>
+      <div class="kpi-context">Peer-country average is 52.5</div>
+    </div>
+  </section>
+
+  <!-- Chart 1: Mortality by country -->
+  <section class="section wrap" id="chart-mortality">
+    <div class="section-head">
+      <p class="section-kicker">Where the U.S. stands</p>
+      <h2>The U.S. death rate is highest — and the racial gap inside it is wider still</h2>
+      <p>Maternal deaths per 100,000 live births, 2022, ranked from lowest to highest. The United States overall (dark) sits above every peer nation; broken out by race and ethnicity, the rate for Black mothers is more than double the U.S. average.</p>
+    </div>
+    <div class="chart-card">
+      <div class="chart-canvas-wrap" style="height: 480px;">
+        <canvas id="mortalityChart" role="img" aria-label="Horizontal bar chart of maternal mortality rate per 100,000 live births by country and U.S. subgroup"></canvas>
+      </div>
+      <div class="legend-row">
+        <span class="legend-item"><span class="legend-swatch" style="background:var(--color-peer)"></span>Peer country</span>
+        <span class="legend-item"><span class="legend-swatch" style="background:var(--color-us)"></span>United States (overall)</span>
+        <span class="legend-item"><span class="legend-swatch" style="background:var(--color-us-hover)"></span>U.S. subgroup by race/ethnicity</span>
+      </div>
+      <p class="source-note">Source: <a href="https://www.commonwealthfund.org/publications/issue-briefs/2024/jun/insights-us-maternal-mortality-crisis-international-comparison" target="_blank" rel="noopener noreferrer">Gunja et al., 2024, The Commonwealth Fund</a>, using OECD Health Statistics 2023 and CDC National Vital Statistics data. 2022 is the latest year with internationally comparable figures; the CDC reports more recent U.S.-only rates separately.</p>
+    </div>
+  </section>
+
+  <!-- Chart 2: Timing -->
+  <section class="section wrap" id="chart-timing">
+    <div class="section-head">
+      <p class="section-kicker">When deaths occur</p>
+      <h2>Most U.S. maternal deaths happen after the delivery-day headlines end</h2>
+      <p>Only 13% of U.S. pregnancy-related deaths happen on the day of delivery. Nearly two-thirds occur in the days, weeks, and months of postpartum recovery that follow — well past the point where most clinical follow-up stops.</p>
+    </div>
+    <div class="chart-card">
+      <div id="timingChart"></div>
+      <div class="source-note">Source: <a href="https://www.ncbi.nlm.nih.gov/books/NBK592630/" target="_blank" rel="noopener noreferrer">Agency for Healthcare Research and Quality, 2023</a>, citing CDC pregnancy-related mortality surveillance data, 2017–2019.</div>
+    </div>
+  </section>
+
+  <!-- Chart 3: Paid leave -->
+  <section class="section wrap" id="chart-leave">
+    <div class="section-head">
+      <p class="section-kicker">The policy gap</p>
+      <h2>The U.S. is the only peer nation with no guaranteed paid leave</h2>
+      <p>Weeks of paid maternity leave by country. The dashed line marks the 18.4-week OECD average. Most peer nations fall short of it, but every one guarantees some paid leave; the United States offers zero weeks at the federal level.</p>
+    </div>
+    <div class="chart-card">
+      <div class="chart-canvas-wrap" style="height: 440px;">
+        <canvas id="leaveChart" role="img" aria-label="Dot plot of paid maternity leave weeks by country compared to the OECD average"></canvas>
+      </div>
+      <p class="source-note">Source: <a href="https://webfs.oecd.org/els-com/Family_Database/PF2_1_Parental_leave_systems.pdf" target="_blank" rel="noopener noreferrer">OECD Family Database, PF2.1: Parental Leave Systems, 2025</a>.</p>
+    </div>
+  </section>
+
+  <!-- Chart 4: Workforce -->
+  <section class="section wrap" id="chart-workforce">
+    <div class="section-head">
+      <p class="section-kicker">The workforce gap</p>
+      <h2>The U.S. leans on OB-GYNs where other countries lean on midwives</h2>
+      <p>OB-GYNs and midwives per 1,000 live births. The U.S. and Canada field the smallest maternity care workforce of any peer nation — and are alone in having more ob-gyns than midwives.</p>
+    </div>
+    <div class="chart-card">
+      <div class="chart-canvas-wrap" style="height: 480px;">
+        <canvas id="workforceChart" role="img" aria-label="Grouped horizontal bar chart of OB-GYNs and midwives per 1,000 live births by country"></canvas>
+      </div>
+      <div class="legend-row">
+        <span class="legend-item"><span class="legend-swatch" style="background:var(--color-primary)"></span>OB-GYNs per 1,000 live births</span>
+        <span class="legend-item"><span class="legend-swatch" style="background:var(--color-us)"></span>Midwives per 1,000 live births</span>
+      </div>
+      <p class="source-note">Source: <a href="https://www.commonwealthfund.org/publications/issue-briefs/2020/nov/maternal-mortality-maternity-care-us-compared-10-countries" target="_blank" rel="noopener noreferrer">Tikkanen et al., 2020, The Commonwealth Fund</a>, using OECD Health Statistics, 2018 or latest available year. Figures are national provider headcounts relative to annual birth volume (a workforce-supply ratio), not a one-provider-per-birth count.</p>
+    </div>
+  </section>
+
+  <!-- Story -->
+  <section class="section wrap" id="story">
+    <div class="story-grid">
+      <div>
+        <h2>The story this dashboard tells</h2>
+        <p>Four charts, one throughline: compared with its peers, the U.S. gives new mothers less protection at nearly every stage — before birth, during recovery, and in the workforce meant to support them.</p>
+        <p>The throughline is policy, not chance. Every peer nation guarantees some paid maternity leave, and most field far deeper midwifery workforces. The U.S. sits at or near the bottom of both lists — and its highest-risk group, Black mothers, absorbs the largest share of that gap.</p>
+      </div>
+      <div class="story-list">
+        <div class="story-item"><span class="story-num">01</span><p>The U.S. maternal death rate is 4.5× the peer-country average, and the gap for Black mothers is more than double the U.S. average itself.</p></div>
+        <div class="story-item"><span class="story-num">02</span><p>65% of U.S. pregnancy-related deaths happen after the day of delivery — during the recovery window paid leave and postpartum visits are meant to cover.</p></div>
+        <div class="story-item"><span class="story-num">03</span><p>The U.S. is the only country studied with zero weeks of guaranteed paid maternity leave, 18 weeks short of the OECD average.</p></div>
+        <div class="story-item"><span class="story-num">04</span><p>With just 15 providers per 1,000 live births, the U.S. maternity workforce is under a third of the peer-country average.</p></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap">
+  <h3>Sources</h3>
+  <ul class="ref-list">
+    <li>Agency for Healthcare Research and Quality. (2023, June). <em>Postpartum care up to 1 year after pregnancy.</em> U.S. Department of Health and Human Services. <a href="https://www.ncbi.nlm.nih.gov/books/NBK592630/" target="_blank" rel="noopener noreferrer">https://www.ncbi.nlm.nih.gov/books/NBK592630/</a></li>
+    <li>Centers for Disease Control and Prevention. (2026, March 4). <em>Maternal mortality rates in the United States, 2024.</em> National Center for Health Statistics. <a href="https://www.cdc.gov/nchs/data/hestat/hestat113.htm" target="_blank" rel="noopener noreferrer">https://www.cdc.gov/nchs/data/hestat/hestat113.htm</a></li>
+    <li>Gunja, M. Z., Gumas, E. D., Masitha, R., &amp; Zephyrin, L. C. (2024, June 4). <em>Insights into the U.S. maternal mortality crisis: An international comparison.</em> The Commonwealth Fund. <a href="https://www.commonwealthfund.org/publications/issue-briefs/2024/jun/insights-us-maternal-mortality-crisis-international-comparison" target="_blank" rel="noopener noreferrer">https://www.commonwealthfund.org/publications/issue-briefs/2024/jun/insights-us-maternal-mortality-crisis-international-comparison</a></li>
+    <li>Organisation for Economic Co-operation and Development. (2025). <em>PF2.1: Parental leave systems</em> [Data table]. OECD Family Database. <a href="https://webfs.oecd.org/els-com/Family_Database/PF2_1_Parental_leave_systems.pdf" target="_blank" rel="noopener noreferrer">https://webfs.oecd.org/els-com/Family_Database/PF2_1_Parental_leave_systems.pdf</a></li>
+    <li>Tikkanen, R., Gunja, M. Z., FitzGerald, M., &amp; Zephyrin, L. (2020, November 18). <em>Maternal mortality and maternity care in the United States compared to 10 other developed countries.</em> The Commonwealth Fund. <a href="https://www.commonwealthfund.org/publications/issue-briefs/2020/nov/maternal-mortality-maternity-care-us-compared-10-countries" target="_blank" rel="noopener noreferrer">https://www.commonwealthfund.org/publications/issue-briefs/2020/nov/maternal-mortality-maternity-care-us-compared-10-countries</a></li>
+    <li>World Health Organization. (2025, April 7). <em>Maternal mortality.</em> <a href="https://www.who.int/news-room/fact-sheets/detail/maternal-mortality" target="_blank" rel="noopener noreferrer">https://www.who.int/news-room/fact-sheets/detail/maternal-mortality</a></li>
+  </ul>
+  <p class="footer-meta">Built by Samira Ray · originally created for DSC/330, Data Communication and Visualization for Business. All figures reflect the years indicated per source; peer-country averages are calculated across the non-U.S. countries shown in each chart.</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.js"></script>
+<script src="./data.js"></script>
+<script src="./app.js"></script>
+<script data-pplx-inline-edit>
+(function () {
+  if (window === window.top) return;
+
+  const allowedParentOrigins = ["https://www.perplexity.ai","https://perplexity.ai","https://testing.perplexity.ai","https://staging.perplexity.ai","https://*.preview.i.perplexity.ai","http://perplexity.localhost","http://localhost:1420","http://127.0.0.1:1420","http://localhost:3000","http://127.0.0.1:3000","http://localhost:5173","http://127.0.0.1:5173"];
+  const MAX_FONT_BYTES = 500 * 1024;
+  const MAX_TOTAL_FONT_BYTES = 2 * 1024 * 1024;
+  let scrollForwarding = false;
+  let scrollRaf = 0;
+  let trustedTopOrigin = null;
+
+  // Allow entries like "https://*.preview.i.perplexity.ai" — the wildcard
+  // matches a single DNS label (no dots), so "https://*.foo" cannot stretch
+  // across multiple labels.
+  function matchesAllowedOrigin(origin) {
+    if (!origin) return false;
+    for (const entry of allowedParentOrigins) {
+      if (!entry.includes("*")) {
+        if (entry === origin) return true;
+        continue;
+      }
+      const pattern = new RegExp(
+        "^" +
+          entry.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^.]+") +
+          "$",
+      );
+      if (pattern.test(origin)) return true;
+    }
+    return false;
+  }
+
+  // Trust decision: when the sender is same-origin-visible (event.origin is a
+  // real origin like https://www.perplexity.ai) we trust event.origin directly.
+  // When event.origin is "null" (opaque broker srcdoc), we fall back to the
+  // broker's stamped `parentOrigin` to identify the top window. The fallback
+  // is claim-only — we rely on the browser's native `targetOrigin` enforcement
+  // on the response path (see postToTrustedTop) to ensure replies can't be
+  // delivered to anyone but the actual top window of that claimed origin.
+  function getTrustedParentOrigin(event) {
+    const forwardedParentOrigin =
+      typeof event.data.parentOrigin === "string" ? event.data.parentOrigin : null;
+    const parentOrigin = event.origin === "null" ? forwardedParentOrigin : event.origin;
+    return matchesAllowedOrigin(parentOrigin) ? parentOrigin : null;
+  }
+
+  // All responses go to window.top with targetOrigin = the allowlisted origin.
+  // An attacker that iframes us inside their own null-origin broker can claim
+  // any parentOrigin they like, but the browser will drop the reply whenever
+  // the real top's origin doesn't match — so the screenshot never leaves.
+  function postToTrustedTop(message) {
+    if (!trustedTopOrigin) return;
+    try {
+      window.top.postMessage(message, trustedTopOrigin);
+    } catch (_error) {}
+  }
+
+  function inlineAll(original, clone) {
+    if (original.nodeType !== 1 || clone.nodeType !== 1) return;
+
+    try {
+      const computedStyle = getComputedStyle(original);
+      // cssText on a computed style is the serialized declaration in modern
+      // Chromium/Safari — a single read beats enumerating ~400 longhand
+      // properties. Firefox returns "" here, so we fall back on empty.
+      const serialized = computedStyle.cssText;
+      if (serialized) {
+        clone.style.cssText = serialized;
+      } else {
+        const parts = new Array(computedStyle.length);
+        for (let index = 0; index < computedStyle.length; index += 1) {
+          const property = computedStyle[index];
+          parts[index] = `${property}:${computedStyle.getPropertyValue(property)};`;
+        }
+        clone.style.cssText = parts.join("");
+      }
+    } catch (_error) {}
+
+    const originalChildren = original.children;
+    const clonedChildren = clone.children;
+    for (
+      let index = 0;
+      index < originalChildren.length && index < clonedChildren.length;
+      index += 1
+    ) {
+      inlineAll(originalChildren[index], clonedChildren[index]);
+    }
+  }
+
+  function extractFontUrl(srcValue) {
+    const matches = [
+      ...srcValue.matchAll(
+        /url\(["']?([^"')]+)["']?\)(?:\s*format\(["']?([^"')]+)["']?\))?/gi,
+      ),
+    ];
+    if (matches.length === 0) return null;
+    const woff2 = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff2"));
+    if (woff2) return woff2[1];
+    const woff = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff"));
+    if (woff) return woff[1];
+    return matches[0][1];
+  }
+
+  // Cache resolved font URL -> data URI across captures. Fonts on a page
+  // essentially never change, and a batch run emits multiple captures back to
+  // back — without this we'd refetch + re-base64 every time.
+  const fontDataUriCache = new Map();
+  const SRC_DECLARATION_RE = /src\s*:\s*[^;}]+/i;
+
+  async function fetchAsDataUri(url) {
+    if (fontDataUriCache.has(url)) return fontDataUriCache.get(url);
+    let dataUri = null;
+    try {
+      const response = await fetch(url, { mode: "cors", credentials: "omit" });
+      if (response.ok) {
+        const blob = await response.blob();
+        if (blob.size <= MAX_FONT_BYTES) {
+          dataUri = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () =>
+              resolve(typeof reader.result === "string" ? reader.result : null);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(blob);
+          });
+        }
+      }
+    } catch (_error) {
+      dataUri = null;
+    }
+    fontDataUriCache.set(url, dataUri);
+    return dataUri;
+  }
+
+  function collectFontFaceRuleTexts() {
+    const rules = [];
+    for (const sheet of document.styleSheets) {
+      let cssRules;
+      try {
+        cssRules = sheet.cssRules;
+      } catch (_error) {
+        continue;
+      }
+      if (!cssRules) continue;
+      for (const rule of cssRules) {
+        const cssText = rule.cssText || "";
+        if (cssText.startsWith("@font-face")) rules.push(cssText);
+      }
+    }
+    return rules;
+  }
+
+  async function buildInlinedFontCss() {
+    const ruleTexts = collectFontFaceRuleTexts();
+    if (ruleTexts.length === 0) return null;
+
+    const resolved = ruleTexts.map((cssText) => {
+      if (!SRC_DECLARATION_RE.test(cssText)) return null;
+      const srcMatch = cssText.match(/src\s*:\s*([^;}]+)[;}]/i);
+      if (!srcMatch) return null;
+      const url = extractFontUrl(srcMatch[1]);
+      if (!url) return null;
+      try {
+        return { cssText, url: new URL(url, document.baseURI).href };
+      } catch (_error) {
+        return null;
+      }
+    });
+
+    const dataUris = await Promise.all(
+      resolved.map((entry) => (entry ? fetchAsDataUri(entry.url) : Promise.resolve(null))),
+    );
+
+    const inlined = [];
+    let totalBytes = 0;
+    for (let index = 0; index < resolved.length; index += 1) {
+      const entry = resolved[index];
+      const dataUri = dataUris[index];
+      if (!entry || !dataUri) continue;
+      const approxBytes = dataUri.length * 0.75;
+      if (totalBytes + approxBytes > MAX_TOTAL_FONT_BYTES) break;
+      totalBytes += approxBytes;
+      inlined.push(entry.cssText.replace(SRC_DECLARATION_RE, `src: url("${dataUri}")`));
+    }
+    return inlined.length > 0 ? inlined.join("\n") : null;
+  }
+
+  function stripExternal(clone) {
+    const images = clone.querySelectorAll("img");
+    for (let index = 0; index < images.length; index += 1) {
+      const src = images[index].getAttribute("src");
+      if (src && !src.startsWith("data:")) images[index].removeAttribute("src");
+    }
+
+    const elements = clone.querySelectorAll("*");
+    for (let index = 0; index < elements.length; index += 1) {
+      const style = elements[index].style.cssText;
+      if (style && style.includes("url(")) {
+        elements[index].style.cssText = style.replace(
+          /url\(["']?(?!data:)[^)"']*["']?\)/gi,
+          "none",
+        );
+      }
+    }
+  }
+
+  function emitScroll() {
+    scrollRaf = 0;
+    if (!scrollForwarding) return;
+    postToTrustedTop({
+      type: "INLINE_EDIT_SCROLL",
+      scrollX: window.scrollX,
+      scrollY: window.scrollY,
+    });
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!scrollForwarding || scrollRaf) return;
+      scrollRaf = requestAnimationFrame(emitScroll);
+    },
+    { passive: true, capture: true },
+  );
+
+  async function handleCaptureRequest(event) {
+    const requestId = event.data.requestId;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    function postResult(dataUrl) {
+      postToTrustedTop({
+        type: "INLINE_EDIT_SCREENSHOT_RESULT",
+        requestId,
+        dataUrl,
+        scrollX,
+        scrollY,
+      });
+    }
+
+    try {
+      // Wait for any pending web fonts to resolve so both inline metrics and
+      // the @font-face inlining below see the same loaded faces.
+      if (document.fonts && document.fonts.ready) {
+        try {
+          await document.fonts.ready;
+        } catch (_error) {}
+      }
+
+      const clone = document.documentElement.cloneNode(true);
+      inlineAll(document.documentElement, clone);
+
+      const removedNodes = clone.querySelectorAll("script,link[rel=\"stylesheet\"],style");
+      for (let index = 0; index < removedNodes.length; index += 1) {
+        removedNodes[index].remove();
+      }
+
+      stripExternal(clone);
+
+      // Re-embed web fonts as data-URI @font-face rules so the SVG rasterizer
+      // can resolve them — external font URLs aren't fetched during
+      // foreignObject rendering, which would otherwise force a fallback face
+      // and change text metrics.
+      const inlinedFontCss = await buildInlinedFontCss();
+      if (inlinedFontCss) {
+        const styleEl = document.createElement("style");
+        styleEl.textContent = inlinedFontCss;
+        const head = clone.querySelector("head");
+        if (head) head.appendChild(styleEl);
+        else clone.insertBefore(styleEl, clone.firstChild);
+      }
+
+      const html = new XMLSerializer().serializeToString(clone);
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+        '<foreignObject width="100%" height="100%">' +
+        `<div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;overflow:hidden">` +
+        `<div style="position:relative;left:-${scrollX}px;top:-${scrollY}px">` +
+        html +
+        "</div></div></foreignObject></svg>";
+      const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      const image = new Image();
+      image.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        postResult(canvas.toDataURL("image/png"));
+      };
+      image.onerror = function () {
+        postResult(null);
+      };
+      image.src = svgUrl;
+    } catch (_error) {
+      postResult(null);
+    }
+  }
+
+  window.addEventListener("message", function (event) {
+    if (!event.data) return;
+    // Only accept messages from the direct parent frame. Blocks sibling /
+    // unrelated-window postMessage senders that could otherwise reach us.
+    if (event.source !== window.parent) return;
+
+    const trustedParentOrigin = getTrustedParentOrigin(event);
+    if (!trustedParentOrigin) return;
+    trustedTopOrigin = trustedParentOrigin;
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_START") {
+      scrollForwarding = true;
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_STOP") {
+      scrollForwarding = false;
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = 0;
+      return;
+    }
+
+    if (event.data.type !== "INLINE_EDIT_CAPTURE_REQUEST") return;
+
+    handleCaptureRequest(event);
+  });
+})();
+
+
+</script></body>
+</html>
