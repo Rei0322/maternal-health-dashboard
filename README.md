@@ -1,5 +1,7 @@
 # The Maternal Health Gap: U.S. vs. the World
 
+[![DOI](https://zenodo.org/badge/1433245671.svg)](https://doi.org/10.5281/zenodo.23643141)
+
 An interactive dashboard comparing U.S. maternal health outcomes with high-income peer nations across four views: maternal mortality (including the racial gap within the U.S.), when pregnancy-related deaths occur, paid maternity leave policy, and the maternity care workforce.
 
 **Live:** https://maternal-health.samira-ray.dev
